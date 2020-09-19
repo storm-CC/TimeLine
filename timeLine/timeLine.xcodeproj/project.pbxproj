@@ -8,13 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		424E1165251466D10090387F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1164251466D10090387F /* AppDelegate.swift */; };
-		424E1167251466D20090387F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1166251466D20090387F /* SceneDelegate.swift */; };
 		424E1169251466D20090387F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1168251466D20090387F /* ViewController.swift */; };
 		424E116C251466D20090387F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424E116A251466D20090387F /* Main.storyboard */; };
 		424E116E251466DC0090387F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 424E116D251466DC0090387F /* Assets.xcassets */; };
 		424E1171251466DC0090387F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424E116F251466DC0090387F /* LaunchScreen.storyboard */; };
 		424E117C251466DC0090387F /* timeLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E117B251466DC0090387F /* timeLineTests.swift */; };
 		424E1187251466DC0090387F /* timeLineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1186251466DC0090387F /* timeLineUITests.swift */; };
+		424E119C251482190090387F /* CCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E119B251482190090387F /* CCViewController.swift */; };
+		424E119E251482ED0090387F /* CCNaviView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E119D251482ED0090387F /* CCNaviView.swift */; };
+		424E11A0251483360090387F /* CCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E119F251483360090387F /* CCDevice.swift */; };
+		424E11A2251484350090387F /* CCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11A1251484350090387F /* CCView.swift */; };
+		424E11A42514855F0090387F /* CCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11A32514855F0090387F /* CCHelper.swift */; };
+		424E11A6251487C90090387F /* UIView+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11A5251487C90090387F /* UIView+Frame.swift */; };
+		424E11A825148D990090387F /* CCViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11A725148D990090387F /* CCViewControllerWrapper.swift */; };
+		424E11AA251498100090387F /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11A9251498100090387F /* UILabel+.swift */; };
+		424E11AC251498910090387F /* CCButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11AB251498910090387F /* CCButton.swift */; };
+		424E11AE25149CA80090387F /* TimeLineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11AD25149CA80090387F /* TimeLineController.swift */; };
+		424E11B025149D130090387F /* CCTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11AF25149D130090387F /* CCTableView.swift */; };
+		424E11B225149F980090387F /* CCTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B125149F980090387F /* CCTableController.swift */; };
+		424E11B425149FFE0090387F /* CCTableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B325149FFE0090387F /* CCTableWrapper.swift */; };
+		424E11B62514A03C0090387F /* CCItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B52514A03C0090387F /* CCItem.swift */; };
+		424E11B82514A0EF0090387F /* CCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B72514A0EF0090387F /* CCTableViewCell.swift */; };
+		424E11BA2514A2950090387F /* CCTableReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B92514A2950090387F /* CCTableReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +52,6 @@
 /* Begin PBXFileReference section */
 		424E1161251466D10090387F /* timeLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		424E1164251466D10090387F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		424E1166251466D20090387F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		424E1168251466D20090387F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		424E116B251466D20090387F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		424E116D251466DC0090387F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +63,22 @@
 		424E1182251466DC0090387F /* timeLineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = timeLineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		424E1186251466DC0090387F /* timeLineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeLineUITests.swift; sourceTree = "<group>"; };
 		424E1188251466DC0090387F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		424E119B251482190090387F /* CCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCViewController.swift; sourceTree = "<group>"; };
+		424E119D251482ED0090387F /* CCNaviView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNaviView.swift; sourceTree = "<group>"; };
+		424E119F251483360090387F /* CCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCDevice.swift; sourceTree = "<group>"; };
+		424E11A1251484350090387F /* CCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCView.swift; sourceTree = "<group>"; };
+		424E11A32514855F0090387F /* CCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCHelper.swift; sourceTree = "<group>"; };
+		424E11A5251487C90090387F /* UIView+Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Frame.swift"; sourceTree = "<group>"; };
+		424E11A725148D990090387F /* CCViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCViewControllerWrapper.swift; sourceTree = "<group>"; };
+		424E11A9251498100090387F /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		424E11AB251498910090387F /* CCButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCButton.swift; sourceTree = "<group>"; };
+		424E11AD25149CA80090387F /* TimeLineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineController.swift; sourceTree = "<group>"; };
+		424E11AF25149D130090387F /* CCTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTableView.swift; sourceTree = "<group>"; };
+		424E11B125149F980090387F /* CCTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTableController.swift; sourceTree = "<group>"; };
+		424E11B325149FFE0090387F /* CCTableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTableWrapper.swift; sourceTree = "<group>"; };
+		424E11B52514A03C0090387F /* CCItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCItem.swift; sourceTree = "<group>"; };
+		424E11B72514A0EF0090387F /* CCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTableViewCell.swift; sourceTree = "<group>"; };
+		424E11B92514A2950090387F /* CCTableReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTableReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +129,10 @@
 		424E1163251466D10090387F /* timeLine */ = {
 			isa = PBXGroup;
 			children = (
+				424E1198251481420090387F /* Base */,
 				424E1164251466D10090387F /* AppDelegate.swift */,
-				424E1166251466D20090387F /* SceneDelegate.swift */,
 				424E1168251466D20090387F /* ViewController.swift */,
+				424E11AD25149CA80090387F /* TimeLineController.swift */,
 				424E116A251466D20090387F /* Main.storyboard */,
 				424E116D251466DC0090387F /* Assets.xcassets */,
 				424E116F251466DC0090387F /* LaunchScreen.storyboard */,
@@ -126,6 +157,28 @@
 				424E1188251466DC0090387F /* Info.plist */,
 			);
 			path = timeLineUITests;
+			sourceTree = "<group>";
+		};
+		424E1198251481420090387F /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				424E119B251482190090387F /* CCViewController.swift */,
+				424E11A725148D990090387F /* CCViewControllerWrapper.swift */,
+				424E119F251483360090387F /* CCDevice.swift */,
+				424E11A1251484350090387F /* CCView.swift */,
+				424E119D251482ED0090387F /* CCNaviView.swift */,
+				424E11A32514855F0090387F /* CCHelper.swift */,
+				424E11A5251487C90090387F /* UIView+Frame.swift */,
+				424E11A9251498100090387F /* UILabel+.swift */,
+				424E11AB251498910090387F /* CCButton.swift */,
+				424E11AF25149D130090387F /* CCTableView.swift */,
+				424E11B125149F980090387F /* CCTableController.swift */,
+				424E11B72514A0EF0090387F /* CCTableViewCell.swift */,
+				424E11B325149FFE0090387F /* CCTableWrapper.swift */,
+				424E11B52514A03C0090387F /* CCItem.swift */,
+				424E11B92514A2950090387F /* CCTableReusableView.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +312,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				424E11B425149FFE0090387F /* CCTableWrapper.swift in Sources */,
 				424E1169251466D20090387F /* ViewController.swift in Sources */,
+				424E119E251482ED0090387F /* CCNaviView.swift in Sources */,
+				424E11B225149F980090387F /* CCTableController.swift in Sources */,
+				424E11AA251498100090387F /* UILabel+.swift in Sources */,
+				424E11A825148D990090387F /* CCViewControllerWrapper.swift in Sources */,
+				424E11A2251484350090387F /* CCView.swift in Sources */,
 				424E1165251466D10090387F /* AppDelegate.swift in Sources */,
-				424E1167251466D20090387F /* SceneDelegate.swift in Sources */,
+				424E11AC251498910090387F /* CCButton.swift in Sources */,
+				424E11A0251483360090387F /* CCDevice.swift in Sources */,
+				424E11A6251487C90090387F /* UIView+Frame.swift in Sources */,
+				424E119C251482190090387F /* CCViewController.swift in Sources */,
+				424E11B62514A03C0090387F /* CCItem.swift in Sources */,
+				424E11B025149D130090387F /* CCTableView.swift in Sources */,
+				424E11BA2514A2950090387F /* CCTableReusableView.swift in Sources */,
+				424E11AE25149CA80090387F /* TimeLineController.swift in Sources */,
+				424E11A42514855F0090387F /* CCHelper.swift in Sources */,
+				424E11B82514A0EF0090387F /* CCTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PV5SXRBQ9U;
 				INFOPLIST_FILE = timeLine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -444,7 +513,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -455,6 +524,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PV5SXRBQ9U;
 				INFOPLIST_FILE = timeLine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,7 +532,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
