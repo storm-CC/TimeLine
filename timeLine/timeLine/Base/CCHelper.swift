@@ -63,6 +63,8 @@ public class CCHelper {
             UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: animated)
         }
     }
+    
+    
 }
 
 
@@ -77,5 +79,34 @@ extension CCHelper{
     }
 }
 
+
+
+extension CCHelper{
+    //data —> dictionary
+    public class func data(toDictionary data: Data?) -> [String:Any]? {
+        guard let data = data else {return [:]}
+        do{
+            if let map = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? [String:Any] {
+                return map
+            }
+        }
+        catch{
+        }
+        return nil
+    }
+    
+    //data -> toArray
+    public class func data(toArray data: Data?) -> [[String:Any]]? {
+        guard let data = data else {return [[:]]}
+        do{
+            if let array = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers]) as? [[String:Any]] {
+                return array
+            }
+        }
+        catch{
+        }
+        return nil
+    }
+}
 
 

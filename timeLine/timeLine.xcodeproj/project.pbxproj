@@ -3,17 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42321313255A42CD00131500 /* TimeLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42321312255A42CD00131500 /* TimeLineViewModel.swift */; };
 		424E1165251466D10090387F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1164251466D10090387F /* AppDelegate.swift */; };
-		424E1169251466D20090387F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1168251466D20090387F /* ViewController.swift */; };
+		424E1169251466D20090387F /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1168251466D20090387F /* MainController.swift */; };
 		424E116C251466D20090387F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424E116A251466D20090387F /* Main.storyboard */; };
 		424E116E251466DC0090387F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 424E116D251466DC0090387F /* Assets.xcassets */; };
 		424E1171251466DC0090387F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424E116F251466DC0090387F /* LaunchScreen.storyboard */; };
-		424E117C251466DC0090387F /* timeLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E117B251466DC0090387F /* timeLineTests.swift */; };
-		424E1187251466DC0090387F /* timeLineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1186251466DC0090387F /* timeLineUITests.swift */; };
 		424E119C251482190090387F /* CCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E119B251482190090387F /* CCViewController.swift */; };
 		424E119E251482ED0090387F /* CCNaviView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E119D251482ED0090387F /* CCNaviView.swift */; };
 		424E11A0251483360090387F /* CCDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E119F251483360090387F /* CCDevice.swift */; };
@@ -30,39 +29,21 @@
 		424E11B62514A03C0090387F /* CCItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B52514A03C0090387F /* CCItem.swift */; };
 		424E11B82514A0EF0090387F /* CCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B72514A0EF0090387F /* CCTableViewCell.swift */; };
 		424E11BA2514A2950090387F /* CCTableReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E11B92514A2950090387F /* CCTableReusableView.swift */; };
+		42DC3C90251889C5005097CF /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC3C8F251889C5005097CF /* Api.swift */; };
+		42DC3C992518945A005097CF /* TimeLineApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC3C982518945A005097CF /* TimeLineApi.swift */; };
+		42DC3CA525189ADA005097CF /* TimeLineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC3CA425189ADA005097CF /* TimeLineModel.swift */; };
+		4BD3EAE106C9C9BE6BE4EAD1 /* Pods_timeLine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EAE4D7CC16FA1D1A6B359B2 /* Pods_timeLine.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		424E1178251466DC0090387F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 424E1159251466D10090387F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 424E1160251466D10090387F;
-			remoteInfo = timeLine;
-		};
-		424E1183251466DC0090387F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 424E1159251466D10090387F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 424E1160251466D10090387F;
-			remoteInfo = timeLine;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		42321312255A42CD00131500 /* TimeLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewModel.swift; sourceTree = "<group>"; };
 		424E1161251466D10090387F /* timeLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		424E1164251466D10090387F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		424E1168251466D20090387F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		424E1168251466D20090387F /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		424E116B251466D20090387F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		424E116D251466DC0090387F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		424E1170251466DC0090387F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		424E1172251466DC0090387F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		424E1177251466DC0090387F /* timeLineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = timeLineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		424E117B251466DC0090387F /* timeLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeLineTests.swift; sourceTree = "<group>"; };
-		424E117D251466DC0090387F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		424E1182251466DC0090387F /* timeLineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = timeLineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		424E1186251466DC0090387F /* timeLineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeLineUITests.swift; sourceTree = "<group>"; };
-		424E1188251466DC0090387F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		424E119B251482190090387F /* CCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCViewController.swift; sourceTree = "<group>"; };
 		424E119D251482ED0090387F /* CCNaviView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCNaviView.swift; sourceTree = "<group>"; };
 		424E119F251483360090387F /* CCDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCDevice.swift; sourceTree = "<group>"; };
@@ -79,6 +60,12 @@
 		424E11B52514A03C0090387F /* CCItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCItem.swift; sourceTree = "<group>"; };
 		424E11B72514A0EF0090387F /* CCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTableViewCell.swift; sourceTree = "<group>"; };
 		424E11B92514A2950090387F /* CCTableReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTableReusableView.swift; sourceTree = "<group>"; };
+		42DC3C8F251889C5005097CF /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		42DC3C982518945A005097CF /* TimeLineApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineApi.swift; sourceTree = "<group>"; };
+		42DC3CA425189ADA005097CF /* TimeLineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineModel.swift; sourceTree = "<group>"; };
+		4EAE4D7CC16FA1D1A6B359B2 /* Pods_timeLine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_timeLine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A37F5DA93563EC2332667414 /* Pods-timeLine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-timeLine.debug.xcconfig"; path = "Target Support Files/Pods-timeLine/Pods-timeLine.debug.xcconfig"; sourceTree = "<group>"; };
+		EF8C11839E9ADFC9B9402F32 /* Pods-timeLine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-timeLine.release.xcconfig"; path = "Target Support Files/Pods-timeLine/Pods-timeLine.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,33 +73,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		424E1174251466DC0090387F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		424E117F251466DC0090387F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				4BD3EAE106C9C9BE6BE4EAD1 /* Pods_timeLine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		137933FBBB8283871F643DC3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A37F5DA93563EC2332667414 /* Pods-timeLine.debug.xcconfig */,
+				EF8C11839E9ADFC9B9402F32 /* Pods-timeLine.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		424E1158251466D10090387F = {
 			isa = PBXGroup;
 			children = (
 				424E1163251466D10090387F /* timeLine */,
-				424E117A251466DC0090387F /* timeLineTests */,
-				424E1185251466DC0090387F /* timeLineUITests */,
 				424E1162251466D10090387F /* Products */,
+				137933FBBB8283871F643DC3 /* Pods */,
+				C8ABC3ABB651450FAE68CCE6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,8 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				424E1161251466D10090387F /* timeLine.app */,
-				424E1177251466DC0090387F /* timeLineTests.xctest */,
-				424E1182251466DC0090387F /* timeLineUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,32 +112,18 @@
 			children = (
 				424E1198251481420090387F /* Base */,
 				424E1164251466D10090387F /* AppDelegate.swift */,
-				424E1168251466D20090387F /* ViewController.swift */,
-				424E11AD25149CA80090387F /* TimeLineController.swift */,
+				424E1168251466D20090387F /* MainController.swift */,
+				42DC3CA425189ADA005097CF /* TimeLineModel.swift */,
+				42DC3C8F251889C5005097CF /* Api.swift */,
+				42DC3C982518945A005097CF /* TimeLineApi.swift */,
 				424E116A251466D20090387F /* Main.storyboard */,
 				424E116D251466DC0090387F /* Assets.xcassets */,
 				424E116F251466DC0090387F /* LaunchScreen.storyboard */,
 				424E1172251466DC0090387F /* Info.plist */,
+				42321312255A42CD00131500 /* TimeLineViewModel.swift */,
+				424E11AD25149CA80090387F /* TimeLineController.swift */,
 			);
 			path = timeLine;
-			sourceTree = "<group>";
-		};
-		424E117A251466DC0090387F /* timeLineTests */ = {
-			isa = PBXGroup;
-			children = (
-				424E117B251466DC0090387F /* timeLineTests.swift */,
-				424E117D251466DC0090387F /* Info.plist */,
-			);
-			path = timeLineTests;
-			sourceTree = "<group>";
-		};
-		424E1185251466DC0090387F /* timeLineUITests */ = {
-			isa = PBXGroup;
-			children = (
-				424E1186251466DC0090387F /* timeLineUITests.swift */,
-				424E1188251466DC0090387F /* Info.plist */,
-			);
-			path = timeLineUITests;
 			sourceTree = "<group>";
 		};
 		424E1198251481420090387F /* Base */ = {
@@ -181,6 +148,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		C8ABC3ABB651450FAE68CCE6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4EAE4D7CC16FA1D1A6B359B2 /* Pods_timeLine.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -188,9 +163,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 424E118B251466DC0090387F /* Build configuration list for PBXNativeTarget "timeLine" */;
 			buildPhases = (
+				3774B49808B07D4FAAD7BA32 /* [CP] Check Pods Manifest.lock */,
 				424E115D251466D10090387F /* Sources */,
 				424E115E251466D10090387F /* Frameworks */,
 				424E115F251466D10090387F /* Resources */,
+				1717310C1960B1F3B7E2683C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -200,42 +177,6 @@
 			productName = timeLine;
 			productReference = 424E1161251466D10090387F /* timeLine.app */;
 			productType = "com.apple.product-type.application";
-		};
-		424E1176251466DC0090387F /* timeLineTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 424E118E251466DC0090387F /* Build configuration list for PBXNativeTarget "timeLineTests" */;
-			buildPhases = (
-				424E1173251466DC0090387F /* Sources */,
-				424E1174251466DC0090387F /* Frameworks */,
-				424E1175251466DC0090387F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				424E1179251466DC0090387F /* PBXTargetDependency */,
-			);
-			name = timeLineTests;
-			productName = timeLineTests;
-			productReference = 424E1177251466DC0090387F /* timeLineTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		424E1181251466DC0090387F /* timeLineUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 424E1191251466DC0090387F /* Build configuration list for PBXNativeTarget "timeLineUITests" */;
-			buildPhases = (
-				424E117E251466DC0090387F /* Sources */,
-				424E117F251466DC0090387F /* Frameworks */,
-				424E1180251466DC0090387F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				424E1184251466DC0090387F /* PBXTargetDependency */,
-			);
-			name = timeLineUITests;
-			productName = timeLineUITests;
-			productReference = 424E1182251466DC0090387F /* timeLineUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -249,14 +190,6 @@
 				TargetAttributes = {
 					424E1160251466D10090387F = {
 						CreatedOnToolsVersion = 11.7;
-					};
-					424E1176251466DC0090387F = {
-						CreatedOnToolsVersion = 11.7;
-						TestTargetID = 424E1160251466D10090387F;
-					};
-					424E1181251466DC0090387F = {
-						CreatedOnToolsVersion = 11.7;
-						TestTargetID = 424E1160251466D10090387F;
 					};
 				};
 			};
@@ -274,8 +207,6 @@
 			projectRoot = "";
 			targets = (
 				424E1160251466D10090387F /* timeLine */,
-				424E1176251466DC0090387F /* timeLineTests */,
-				424E1181251466DC0090387F /* timeLineUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -291,21 +222,49 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		424E1175251466DC0090387F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		424E1180251466DC0090387F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1717310C1960B1F3B7E2683C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-timeLine/Pods-timeLine-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-timeLine/Pods-timeLine-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-timeLine/Pods-timeLine-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3774B49808B07D4FAAD7BA32 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-timeLine-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		424E115D251466D10090387F /* Sources */ = {
@@ -313,11 +272,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				424E11B425149FFE0090387F /* CCTableWrapper.swift in Sources */,
-				424E1169251466D20090387F /* ViewController.swift in Sources */,
+				424E1169251466D20090387F /* MainController.swift in Sources */,
 				424E119E251482ED0090387F /* CCNaviView.swift in Sources */,
+				42DC3C90251889C5005097CF /* Api.swift in Sources */,
 				424E11B225149F980090387F /* CCTableController.swift in Sources */,
+				42DC3C992518945A005097CF /* TimeLineApi.swift in Sources */,
 				424E11AA251498100090387F /* UILabel+.swift in Sources */,
+				42DC3CA525189ADA005097CF /* TimeLineModel.swift in Sources */,
 				424E11A825148D990090387F /* CCViewControllerWrapper.swift in Sources */,
+				42321313255A42CD00131500 /* TimeLineViewModel.swift in Sources */,
 				424E11A2251484350090387F /* CCView.swift in Sources */,
 				424E1165251466D10090387F /* AppDelegate.swift in Sources */,
 				424E11AC251498910090387F /* CCButton.swift in Sources */,
@@ -333,36 +296,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		424E1173251466DC0090387F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				424E117C251466DC0090387F /* timeLineTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		424E117E251466DC0090387F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				424E1187251466DC0090387F /* timeLineUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		424E1179251466DC0090387F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 424E1160251466D10090387F /* timeLine */;
-			targetProxy = 424E1178251466DC0090387F /* PBXContainerItemProxy */;
-		};
-		424E1184251466DC0090387F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 424E1160251466D10090387F /* timeLine */;
-			targetProxy = 424E1183251466DC0090387F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		424E116A251466D20090387F /* Main.storyboard */ = {
@@ -500,17 +434,18 @@
 		};
 		424E118C251466DC0090387F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A37F5DA93563EC2332667414 /* Pods-timeLine.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PV5SXRBQ9U;
 				INFOPLIST_FILE = timeLine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cc.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -519,104 +454,21 @@
 		};
 		424E118D251466DC0090387F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF8C11839E9ADFC9B9402F32 /* Pods-timeLine.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PV5SXRBQ9U;
 				INFOPLIST_FILE = timeLine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cc.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		424E118F251466DC0090387F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PV5SXRBQ9U;
-				INFOPLIST_FILE = timeLineTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLineTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/timeLine.app/timeLine";
-			};
-			name = Debug;
-		};
-		424E1190251466DC0090387F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PV5SXRBQ9U;
-				INFOPLIST_FILE = timeLineTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLineTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/timeLine.app/timeLine";
-			};
-			name = Release;
-		};
-		424E1192251466DC0090387F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PV5SXRBQ9U;
-				INFOPLIST_FILE = timeLineUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLineUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = timeLine;
-			};
-			name = Debug;
-		};
-		424E1193251466DC0090387F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PV5SXRBQ9U;
-				INFOPLIST_FILE = timeLineUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cc.timeLineUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = timeLine;
 			};
 			name = Release;
 		};
@@ -637,24 +489,6 @@
 			buildConfigurations = (
 				424E118C251466DC0090387F /* Debug */,
 				424E118D251466DC0090387F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		424E118E251466DC0090387F /* Build configuration list for PBXNativeTarget "timeLineTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				424E118F251466DC0090387F /* Debug */,
-				424E1190251466DC0090387F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		424E1191251466DC0090387F /* Build configuration list for PBXNativeTarget "timeLineUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				424E1192251466DC0090387F /* Debug */,
-				424E1193251466DC0090387F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

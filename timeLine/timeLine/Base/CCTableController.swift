@@ -35,7 +35,11 @@ class CCTableController: CCViewController{
         self.tableView?.dataSource = self
         self.tableView?.separatorStyle = .singleLine
         self.tableView?.tableFooterView?.frame = CGRect(x: 0, y: 0, width: self.contentView.w, height: 24)
-        self.tableView?.contentInsetAdjustmentBehavior = .never
+        if #available(iOS 11.0, *) {
+            self.tableView?.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
         
         self.contentView.addSubview(self.tableView!)
 

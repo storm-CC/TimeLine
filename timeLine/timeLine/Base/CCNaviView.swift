@@ -36,7 +36,7 @@ open class CCNaviView: CCView {
         }
     }
     //标题
-    private var titleView = UILabel(frame: CGRect(x: 75.0, y: CCDevice.naviOffset, width: CCDevice.w-75.0*2, height: CCDevice.topOffset-CCDevice.naviOffset))
+    var titleView = UILabel(frame: CGRect(x: 75.0, y: CCDevice.naviOffset, width: CCDevice.w-75.0*2, height: CCDevice.topOffset-CCDevice.naviOffset))
     
     //导航栏中间view
     open var centerView : UIView? {
@@ -78,12 +78,14 @@ open class CCNaviView: CCView {
         self.backgroundView.frame = self.bounds
         self.backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.backgroundView.backgroundColor = UIColor.clear
-        self.backgroundView.image = CCHelper.image(color: CCHelper.color(0xfffff))
+        self.backgroundView.image = CCHelper.image(color: CCHelper.color(0xffffff))
+        self.addSubview(self.backgroundView)
         
         //整个导航栏的子控件
         self.contentView.frame = self.bounds
         self.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.contentView.backgroundColor = UIColor.clear
+        self.addSubview(self.contentView)
         
         self.titleView.frame = CGRect(x: 75.0, y: CCDevice.naviOffset, width: self.contentView.w-75.0*2, height: self.contentView.h-CCDevice.naviOffset)
         self.titleView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -109,7 +111,6 @@ open class CCNaviView: CCView {
     
     open override func updateSubviews(_ action:String, _ value:Any?){
         self.separator.frame = CGRect(x: 0, y: self.contentView.h-CCDevice.pixel, width: self.contentView.w, height: CCDevice.pixel)
-        
         
         let size = backBar.frame.size
         backBar.frame = CGRect(x: 15, y: CCDevice.naviOffset+(self.contentView.h-CCDevice.naviOffset-size.height)/2, width: size.width, height: size.height)

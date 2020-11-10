@@ -1,0 +1,23 @@
+
+platform :ios, '9.0'
+
+inhibit_all_warnings!    # 关闭pod的警告
+
+target 'timeLine' do
+use_frameworks!
+
+source 'https://github.com/CocoaPods/Specs.git'
+# 自动布局
+pod 'SnapKit'
+
+# Json 解析
+pod 'HandyJSON'
+
+# 网络库
+pod 'Moya'
+
+pod 'RxCocoa'
+
+pod 'RxSwift'
+ 
+end

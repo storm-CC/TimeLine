@@ -43,8 +43,7 @@ open class CCViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = CCHelper.color(247, 247, 247)
-        
+        self.view.backgroundColor = .white
         self.contentView.frame = CGRect(x: 0, y: CCDevice.topOffset, width: self.view.w, height: self.view.h-CCDevice.topOffset)
         self.contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.contentView.backgroundColor = self.view.backgroundColor
