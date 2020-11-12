@@ -11,7 +11,7 @@ import Moya
 
 class MainController: CCViewController {
     
-    private var datas: (tweets: TimeLineTweets?, sender: TimeLineTweet.TimeLineSender?)?
+    private var datas: (tweets: TimeLineTweets?, sender: TimeLineTweet.TimeLineSender?) = (nil, nil)
     
     
     var requests = [Cancellable]()
@@ -31,18 +31,17 @@ class MainController: CCViewController {
         self.contentView.addSubview(btn)
         
         requests.append(TimeLineTweets.getInfo {[weak self] (tws) in
-            self?.datas?.tweets = tws
+            self?.datas.tweets = tws
         })
         
         requests.append(TimeLineTweets.getSender {[weak self] (sender) in
-            self?.datas?.sender = sender
+            self?.datas.sender = sender
         })
         
     }
 
     @objc func wxClick(){
-        let vc = TimeLineController()
-        vc.datas = datas
+        let vc = TimeLineController.init(datas: datas)
         AppDelegate.navController.pushViewController(vc, animated: true)
     }
 

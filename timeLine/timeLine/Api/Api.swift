@@ -28,10 +28,10 @@ public enum Api {
                 do{
                     let _data = try JSONSerialization.jsonObject(with: response.data, options: [.mutableContainers])
                         completion?(_data)
+                    print(" headers:\(api.headers ?? [:])\n path:\(api.path)\n data:\(_data)")
                 }catch{
+                    print(error)
                 }
-                
-                print(" headers:\(api.headers ?? [:])\n path:\(api.path)\n statusCode:\(response.statusCode)")
             }
             else if case let .failure(error) = result {
                 print(error.localizedDescription)

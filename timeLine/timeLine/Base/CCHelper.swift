@@ -11,11 +11,12 @@ import UIKit
 //辅助类，一些小工具集合，未分离
 public class CCHelper {
     //字体:
-    public class func font(_ size: CGFloat, _ blod:Bool = false) -> UIFont {
+    public class func font(_ size: CGFloat, _ blod:Bool = false, _ scale: Bool = false) -> UIFont {
+        let fontSize = scale ? size * CCDevice.zoom.w : size
         if blod {
-            return UIFont.boldSystemFont(ofSize: size)
+            return UIFont.boldSystemFont(ofSize: fontSize)
         }
-        return UIFont.systemFont(ofSize: size)
+        return UIFont.systemFont(ofSize: fontSize)
     }
     
     //颜色:rgb+alpha, rgb:[0,255],a:[0,1]
@@ -110,3 +111,13 @@ extension CCHelper{
 }
 
 
+
+extension Int{
+    func w() -> CGFloat{
+        return CGFloat(self) * (UIScreen.main.bounds.width / 375)
+    }
+    
+    func h() -> CGFloat{
+        return CGFloat(self) * (UIScreen.main.bounds.height / 667)
+    }
+}
