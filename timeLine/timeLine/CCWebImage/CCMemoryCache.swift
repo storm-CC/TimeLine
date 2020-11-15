@@ -33,16 +33,16 @@ class CCLinkedMapNode: Equatable{
  图片缓存双链表
  */
 class CCLinkedMap{
-    var dic: Dictionary<String, CCLinkedMapNode> = [:]
-    var head: CCLinkedMapNode?          //表头元素
-    var tail: CCLinkedMapNode?          //表尾元素
+    fileprivate var dic: Dictionary<String, CCLinkedMapNode> = [:]
+    fileprivate var head: CCLinkedMapNode?          //表头元素
+    fileprivate var tail: CCLinkedMapNode?          //表尾元素
     
-    var totalCost: Int = 0      //图片缓存
-    var totalCount: Int = 0     //图片总数
+    fileprivate var totalCost: Int = 0      //图片缓存
+    fileprivate var totalCount: Int = 0     //图片总数
     
     
     /**表头插入元素*/
-    public func insertNodeAtHead(_ node: CCLinkedMapNode?){
+    fileprivate func insertNodeAtHead(_ node: CCLinkedMapNode?){
         guard let node = node else {return }
         dic[node.key] = node
         totalCost += node.cost
@@ -58,7 +58,7 @@ class CCLinkedMap{
     }
     
     /**将node放到表头*/
-    public func bringNodeToHead(_ node: CCLinkedMapNode?){
+    fileprivate func bringNodeToHead(_ node: CCLinkedMapNode?){
         guard let node = node else { return }
         if node == head { return }
         if node == tail{
@@ -78,7 +78,7 @@ class CCLinkedMap{
     }
     
     /**删除节点*/
-    public func removeNode(_ node: CCLinkedMapNode?) {
+    fileprivate func removeNode(_ node: CCLinkedMapNode?) {
         guard let node = node else { return }
         self.dic.removeValue(forKey: node.key)
         totalCost -= node.cost
@@ -94,13 +94,13 @@ class CCLinkedMap{
     }
     
     /**删除链尾节点*/
-    public func removeTailNode() -> CCLinkedMapNode? {
+    fileprivate func removeTailNode() -> CCLinkedMapNode? {
         guard let _tail = tail else { return nil }
         removeNode(_tail)
         return _tail
     }
     
-    public func removeAll(){
+    fileprivate func removeAll(){
         totalCost = 0
         totalCount = 0
         head = nil
@@ -115,6 +115,8 @@ class CCMemoryCache{
     var lru: CCLinkedMap = CCLinkedMap()
     var queue: DispatchQueue = DispatchQueue.init(label: "com.cc.cache.memory")
     var lock: pthread_mutex_t!
+    
+    //缓存过期时间+缓存清除策略
     
     public init() {
         pthread_mutex_init(&lock, nil)
@@ -133,6 +135,23 @@ class CCMemoryCache{
         let cost = lru.totalCost
         pthread_mutex_unlock(&lock)
         return cost
+    }
+    
+    public func object(for key: String?) -> CCLinkedMapNode? {
+        guard let key = key else { return nil }
+        pthread_mutex_lock(&lock)
+        let node = lru.dic[key]
+        lru.bringNodeToHead(node)
+        pthread_mutex_unlock(&lock)
+        return node
+    }
+    
+    public func containsObject(for key: String?) -> Bool{
+        guard let key = key else { return false }
+        pthread_mutex_lock(&lock)
+        let contains = lru.dic.keys.contains(key)
+        pthread_mutex_unlock(&lock)
+        return contains
     }
     
     public func setObject(objc: CCLinkedMapNode?, key: String?){
@@ -165,6 +184,11 @@ class CCMemoryCache{
         pthread_mutex_unlock(&lock)
     }
     
+    public func removeAll(){
+        pthread_mutex_lock(&lock)
+        lru.removeAll()
+        pthread_mutex_unlock(&lock)
+    }
 }
 
 

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		42321313255A42CD00131500 /* TimeLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42321312255A42CD00131500 /* TimeLineViewModel.swift */; };
 		423B0749255D06D900CAB1D4 /* CCMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B0748255D06D900CAB1D4 /* CCMemoryCache.swift */; };
+		423B0751255E581400CAB1D4 /* CCDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B0750255E581400CAB1D4 /* CCDiskCache.swift */; };
+		423B0754255E806900CAB1D4 /* CCKVStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B0753255E806900CAB1D4 /* CCKVStorage.swift */; };
 		424E1165251466D10090387F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1164251466D10090387F /* AppDelegate.swift */; };
 		424E1169251466D20090387F /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E1168251466D20090387F /* MainController.swift */; };
 		424E116C251466D20090387F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424E116A251466D20090387F /* Main.storyboard */; };
@@ -121,6 +123,8 @@
 /* Begin PBXFileReference section */
 		42321312255A42CD00131500 /* TimeLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewModel.swift; sourceTree = "<group>"; };
 		423B0748255D06D900CAB1D4 /* CCMemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCMemoryCache.swift; sourceTree = "<group>"; };
+		423B0750255E581400CAB1D4 /* CCDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCDiskCache.swift; sourceTree = "<group>"; };
+		423B0753255E806900CAB1D4 /* CCKVStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCKVStorage.swift; sourceTree = "<group>"; };
 		424E1161251466D10090387F /* timeLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		424E1164251466D10090387F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		424E1168251466D20090387F /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
@@ -414,6 +418,8 @@
 			children = (
 				42C2DD82255BC3090081A3A9 /* UIImage+WebCache.swift */,
 				423B0748255D06D900CAB1D4 /* CCMemoryCache.swift */,
+				423B0750255E581400CAB1D4 /* CCDiskCache.swift */,
+				423B0753255E806900CAB1D4 /* CCKVStorage.swift */,
 			);
 			path = CCWebImage;
 			sourceTree = "<group>";
@@ -842,6 +848,8 @@
 				42C2DE6F255BCC290081A3A9 /* NSObject+YYModel.m in Sources */,
 				42C2DE8B255BCC290081A3A9 /* UIScrollView+YYAdd.m in Sources */,
 				42C2DE66255BCC290081A3A9 /* YYImageCoder.m in Sources */,
+				423B0751255E581400CAB1D4 /* CCDiskCache.swift in Sources */,
+				423B0754255E806900CAB1D4 /* CCKVStorage.swift in Sources */,
 				42C2DE5E255BCC290081A3A9 /* YYDiskCache.m in Sources */,
 				42C2DE6A255BCC290081A3A9 /* UIImageView+YYWebImage.m in Sources */,
 				42C2DEA0255BCC290081A3A9 /* NSObject+YYAddForKVO.m in Sources */,
