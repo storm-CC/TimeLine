@@ -68,7 +68,7 @@ class TimeLineController: CCTableController {
         
         let bgImgView = UIImageView.init(frame: CGRect(x: 0, y: -100.w(), width: CCDevice.w, height: 350.w()))
         bgImgView.backgroundColor = .gray
-        bgImgView.setImageWith(URL(string: _datas.profileImage), placeholder: nil, options: YYWebImageOptions.refreshImageCache)
+        bgImgView.setImageWith(URL(string: _datas.profileImage))
         header.addSubview(bgImgView)
         
         let avatarView = UIImageView.init(frame: CGRect(x: CCDevice.w-100, y: bgImgView.maxY-70, width: 100, height: 100))

@@ -15,7 +15,7 @@ class CCDiskCache {
     public var costLimit = 0
     public var ageLimit: TimeInterval = 0
     
-    private var kv = CCKVStorage()
+    private var kv = CCKVStorage.init(path: "")
     
     fileprivate let lock = DispatchSemaphore.init(value: 0)
     fileprivate let queue = DispatchQueue.init(label: "com.cc.cache.disk")
@@ -64,5 +64,8 @@ class CCDiskCache {
 
 
 extension CCDiskCache{
-    
+//    public func getItemForKey(_ key: String?) -> CCKVStorage {
+//        guard let key = key, key.count <= 0 else { return }
+//
+//    }
 }
