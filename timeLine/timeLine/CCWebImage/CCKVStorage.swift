@@ -6,22 +6,57 @@
 //  Copyright © 2020 stormVCC. All rights reserved.
 //
 import SQLite3
-//import Foundation
+
 
 /**
+ 每个path下，都有data和trash文件夹，其中data是存放数据的文件缓存，文件名通过md5加密，trash则是丢弃的缓存文件的文件夹。path下的manifest.sqlite是数据库文件，manifest.sqlite-shm和manifest.sqlite-wal是sqlite数据库WAL机制所需文件。
+ WAL机制：在写数据时，并不是直接操作数据库文件，而是操作一个WAL文件，这样当我们插入、删除数据时，只是写一条操作语句到WAL文件，当WAL文件到达一定量级（默认1000page）时，sqlite就会把数据同步到数据库文件中。其带来的不足之处时读数据时，可能要同事考虑到WAL文件与数据库文件，所以读数据性能会有一定下降。但这个对于移动端的数据量来说表现得并不明显。所以数据库在删除数据后，数据库文件大小有时候反而会增大，但并不会无限制增大，当增长到一定数量时，就会变小。
+ 
+ 文件路径：
+ /manifest.sqlite
+ /manifest.sqlite-shm
+ /manifest.sqlite-wal
+ /data/..
+ /trash/..
+ 
  sqlite3_stmt，C接口中“准备语句对象”，该对象是一条SQL语句的实例，而且该语句已经编译成二进制形式，可以直接进行计算。
- OpaquePointer，如果一个C指针类型无法在Swift中找到对应的类型，可以用这个指针来表达，
+ OpaquePointer，如果一个C指针类型无法在Swift中找到对应的类型，可以用这个指针来表达。
+ 
+ manifest(
+ key                text,
+ filename           text,
+ size               integer,
+ inline_data        blob,
+ modification_time  integer,
+ last_access_time   integer,
+ extended_data      integer,
+ extended_data      blob,
+ primary key(key)
+ )
+ 
+ SqLite3使用过程；
+ sqlite3_open：打开一个sqlite数据库文件的连接并返回一个数据库连接对象。
+ sqlite3_prepare:将sql文件转换成一个stmt准备语句对象，返回这个对象的指针。
  */
 
+
+class CCKVStorageItem{
+    public var key = ""
+    public var value = Data()
+    public var filename: String?
+    public var size = 0
+    public var modTime = 0
+    public var accessTime = 0
+    public var extendedData: Data? = nil
+}
+
 class CCKVStorage{
-    
     private let limit: (maxErrorRetryCount: Int, minRetryTimeInterval: TimeInterval) = (8, 2)
     private let dbFileName = "manifest.sqlite"
     private let dbShmFileName = "manifest.sqlite-shm"
     private let dbWalFileName = "manifest.sqlite-wal"
     private let dataDirectorName = "data"
     private let trashDirectoryName = "trash"
-    
     
     private var path = ""           //外部传入的数据库存储位置
     private var dbPath = ""         //数据库文件地址
@@ -99,8 +134,9 @@ extension CCKVStorage{
             if result == SQLITE_BUSY || result == SQLITE_LOCKED {           //如果数据库关闭失败，则销毁数据库中的每条记录，然后再关闭数据库。
                 if !stmtFinalized{
                     stmtFinalized = true
-                    while let stmt = sqlite3_next_stmt(_db, nil), stmt != OpaquePointer.init(bitPattern: 0) {
-                        sqlite3_finalize(stmt)      //销毁前面创建的stmt准备语句，每个准备语句都必须使用这个函数去销毁避免内存泄漏。
+                    //遍历所有未完成的准备好的语句并完成他们
+                    while let stmt = sqlite3_next_stmt(_db, nil){
+                        sqlite3_finalize(stmt)      //每个准备语句都必须使用这个函数去销毁避免内存泄漏。
                         retry = true
                     }
                 }
@@ -171,4 +207,51 @@ extension CCKVStorage{
     }
     
     
+}
+
+
+extension CCKVStorage{
+    /**
+     通过item的参数保存 key value filename extendedData
+     */
+    public func saveItem(_ item: CCKVStorageItem) -> Bool{
+        return saveItem(with: item.key, value: item.value, filename: item.filename, extendedData: item.extendedData)
+    }
+    
+    public func saveItem(with key: String?, value: Data?) -> Bool{
+        
+        return saveItem(with: key, value: value, filename: nil, extendedData: nil)
+    }
+    
+    public func saveItem(with key: String?, value: Data?, filename: String?, extendedData: Data?) -> Bool{
+        return true
+    }
+    
+    public func removeItem(for key: String?) -> Bool{
+        return true
+    }
+    
+    public func removeItem(for keys: Array<String>) -> Bool{
+        return true
+    }
+    
+    public func removeItemsLargerThanSize(_ size: Int) -> Bool{
+        return true
+    }
+    
+    public func removeItemsEarlierThanTime(_ time: Int) -> Bool{
+        return true
+    }
+    
+    public func removeItemsToFitSize(_ maxSize: Int) -> Bool{
+        return true
+    }
+    
+    public func removeItemsToFitCount(_ maxCount: Int) -> Bool{
+        return true
+    }
+    
+    public func removeAllItems() -> Bool{
+        return true
+    }
 }
