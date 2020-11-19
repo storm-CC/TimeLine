@@ -36,20 +36,26 @@ import SQLite3
  
  SqLite3使用过程；
  sqlite3_open：打开一个sqlite数据库文件的连接并返回一个数据库连接对象。
- sqlite3_prepare:将sql文件转换成一个stmt准备语句对象，返回这个对象的指针。
+ sqlite3_prepare:将sql文件转换成一个stmt准备语句对象，返回这个对象的指针。这个接口需要一个数据库连接指针以及一个要准备的包含SQL语句的文本。他并不执行SQL语句，只是准备这个SQL语句，sqlite3_prepare执行代价较为昂贵，所以通常尽可能的重用prepare语句。
+ sqlite3_step:用于执行sqlite3_prepare创建的准备语句。这个语句执行到结果的第一行柯勇的位置，继续前进到结果的第二行的话，只需在此调用sqlite3_step，直到语句完成。
+ sqlite3_column:每次sqlite3_step得到一个结果集的列停下后，这个过程就可以被多次调用去查询这个行的各列的值。
+ sqlite3_finalize:这个函数销毁前面被sqlite3_prepare创建的准备语句，每个准备语句都必须使用这个函数去销毁以防止内存泄漏。
+ sqlite3_close:这个函数关闭前面使用sqlite3_open打开的数据库连接，任何与这个连接相关的准备语句必须在调用这个关闭函数之前被释放。
  */
 
 
+/**缓存相关参数*/
 class CCKVStorageItem{
-    public var key = ""
-    public var value = Data()
-    public var filename: String?
-    public var size = 0
-    public var modTime = 0
-    public var accessTime = 0
-    public var extendedData: Data? = nil
+    public var key = ""                         //缓存键
+    public var value = Data()                   //缓存值
+    public var filename: String?                //缓存文件名
+    public var size = 0                         //缓存大小
+    public var modTime = 0                      //修改时间
+    public var accessTime = 0                   //最后使用时间
+    public var extendedData: Data? = nil        //扩展数据
 }
 
+// 缓存操作实现
 class CCKVStorage{
     private let limit: (maxErrorRetryCount: Int, minRetryTimeInterval: TimeInterval) = (8, 2)
     private let dbFileName = "manifest.sqlite"
@@ -58,7 +64,7 @@ class CCKVStorage{
     private let dataDirectorName = "data"
     private let trashDirectoryName = "trash"
     
-    private var path = ""           //外部传入的数据库存储位置
+    private(set) var path = ""           //外部传入的数据库存储位置
     private var dbPath = ""         //数据库文件地址
     private var dataPath = ""       //data地址
     private var trashPath = ""      //trash地址
@@ -136,7 +142,7 @@ extension CCKVStorage{
                     stmtFinalized = true
                     //遍历所有未完成的准备好的语句并完成他们
                     while let stmt = sqlite3_next_stmt(_db, nil){
-                        sqlite3_finalize(stmt)      //每个准备语句都必须使用这个函数去销毁避免内存泄漏。
+                        sqlite3_finalize(stmt)
                         retry = true
                     }
                 }
