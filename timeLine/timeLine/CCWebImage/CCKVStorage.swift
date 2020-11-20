@@ -37,7 +37,7 @@ import SQLite3
  SqLite3使用过程；
  sqlite3_open：打开一个sqlite数据库文件的连接并返回一个数据库连接对象。
  sqlite3_prepare:将sql文件转换成一个stmt准备语句对象，返回这个对象的指针。这个接口需要一个数据库连接指针以及一个要准备的包含SQL语句的文本。他并不执行SQL语句，只是准备这个SQL语句，sqlite3_prepare执行代价较为昂贵，所以通常尽可能的重用prepare语句。
- sqlite3_step:用于执行sqlite3_prepare创建的准备语句。这个语句执行到结果的第一行柯勇的位置，继续前进到结果的第二行的话，只需在此调用sqlite3_step，直到语句完成。
+ sqlite3_step:用于执行sqlite3_prepare创建的准备语句。这个语句执行到结果的第一行可用的位置，继续前进到结果的第二行的话，只需在此调用sqlite3_step，直到语句完成。
  sqlite3_column:每次sqlite3_step得到一个结果集的列停下后，这个过程就可以被多次调用去查询这个行的各列的值。
  sqlite3_finalize:这个函数销毁前面被sqlite3_prepare创建的准备语句，每个准备语句都必须使用这个函数去销毁以防止内存泄漏。
  sqlite3_close:这个函数关闭前面使用sqlite3_open打开的数据库连接，任何与这个连接相关的准备语句必须在调用这个关闭函数之前被释放。
@@ -181,7 +181,220 @@ extension CCKVStorage{
         }
         return result == SQLITE_OK
     }
-    /***/
+    
+    /**重置数据库*/
+    private func reset() {
+        do {
+            try FileManager.default.removeItem(atPath: path.appending("/\(dbFileName)"))
+            try FileManager.default.removeItem(atPath: path.appending("/\(dbShmFileName)"))
+            try FileManager.default.removeItem(atPath: path.appending("/\(dbWalFileName)"))
+        } catch {}
+        fileMoveAllToTrash()
+        fileEmptyTrashInBackground()
+    }
+    
+    
+}
+
+/**存储API*/
+extension CCKVStorage{
+    /**
+     通过item的参数保存 key value filename extendedData
+     */
+    public func saveItem(_ item: CCKVStorageItem) -> Bool{
+        return saveItem(with: item.key, value: item.value, filename: item.filename, extendedData: item.extendedData)
+    }
+    
+    public func saveItem(with key: String?, value: Data?) -> Bool{
+        return saveItem(with: key, value: value, filename: nil, extendedData: nil)
+    }
+    
+    
+    /// 添加缓存
+    /// - Parameters:
+    ///   - key: 缓存键
+    ///   - value: 缓存对象
+    ///   - filename: 缓存文件名称  filename != nil，则用文件缓存value，并把key，filename，extendedData写入数据库；否则，用数据库缓存
+    ///   - extendedData: 缓存扩展数据
+    /// - Returns: 缓存成功与否
+    public func saveItem(with key: String?, value: Data?, filename: String?, extendedData: Data?) -> Bool{
+        guard let key = key, key.count > 0 else { return false }
+        if let filename = filename{
+            
+        }else{
+            
+        }
+        return true
+    }
+    
+}
+
+extension CCKVStorage{
+    /**写入数据库*/
+    private func dbSave(with key: String?, value: Data?, fileName: String?, extendedData: Data?) -> Bool{
+        guard let key = key, let value = value else { return false }
+        let sql = "insert or replace into manifest (key, finename, size, inline_data, modification_time, last_access_time, extended_data) values (?1, ?2, ?3, ?4, ?5, ?6, ?7);"
+        let stmt = dbPrepareStmt(sql)
+        guard let _stmt = stmt else { return false }
+        let timestamp: Int32 = Int32(time(nil))
+        //参数绑定
+        sqlite3_bind_text(_stmt, 1, key, -1, nil)
+        sqlite3_bind_text(stmt, 2, fileName, -1, nil)
+        sqlite3_bind_int(stmt, 3, Int32(value.count))
+        if let _fileName = fileName, _fileName.count > 0{
+            sqlite3_bind_blob(_stmt, 4, NSData.init(data: value).bytes, Int32(value.count), nil)
+        }else{
+            sqlite3_bind_blob(_stmt, 4, nil, 0, nil)
+        }
+        
+        sqlite3_bind_int(_stmt, 5, timestamp)
+        sqlite3_bind_int(_stmt, 6, timestamp)
+        sqlite3_bind_blob(_stmt, 7, NSData.init(data: extendedData!).bytes, Int32(extendedData?.count ?? 0), nil)
+        let result = sqlite3_step(_stmt)
+        if result == SQLITE_DONE{
+            print(sqlite3_errmsg(db) ?? "sqlite insert error")
+            return false
+        }
+        return true
+    }
+    
+    /**用sql字符串生成SQL准备语句对象stmt*/
+    private func dbPrepareStmt(_ sql: String?) -> OpaquePointer?{
+        guard let sql = sql, sql.count > 0, dbCheck(), var dbStmtCache = dbStmtCache else {
+            return nil
+        }
+        var stmt = dbStmtCache[sql] as? OpaquePointer
+        if stmt != nil {
+            let result = sqlite3_prepare_v2(db, sql, -1, &stmt , nil)
+            if result != SQLITE_OK {
+                print(sqlite3_errmsg(db) ?? "sqlite stmt prepare error")
+                return nil
+            }
+            //将新的stmt缓存到字典
+            dbStmtCache[sql] = stmt
+        }else{
+            //重置stmt状态
+            sqlite3_reset(stmt)
+        }
+        return stmt
+    }
+    
+}
+
+/**清理缓存API*/
+extension CCKVStorage{
+    /// 删除缓存
+    /// - Parameter key: -
+    /// - Returns: -
+    public func removeItem(for key: String?) -> Bool{
+        return true
+    }
+    public func removeItem(for keys: Array<String>) -> Bool{
+        return true
+    }
+    
+    /// 删除所有容量大于size的缓存
+    /// - Parameter size: -
+    /// - Returns: -
+    public func removeItemsLargerThanSize(_ size: Int) -> Bool{
+        return true
+    }
+    
+    /// 删除所有时间比time小的缓存
+    /// - Parameter time: -
+    /// - Returns: -
+    public func removeItemsEarlierThanTime(_ time: Int) -> Bool{
+        return true
+    }
+    
+    /// 将缓存容量删除到maxSize大小，使用LRU
+    /// - Parameter maxSize: -
+    /// - Returns: -
+    public func removeItemsToFitSize(_ maxSize: Int) -> Bool{
+        return true
+    }
+    
+    /// 减小缓存数量，不超过maxCount，使用LRU
+    /// - Parameter maxCount: -
+    /// - Returns: -
+    public func removeItemsToFitCount(_ maxCount: Int) -> Bool{
+        return true
+    }
+    
+    /// 删除所有缓存
+    /// - Returns: -
+    public func removeAllItems() -> Bool{
+        return true
+    }
+}
+
+/**缓存读取API*/
+extension CCKVStorage{
+    /// 获取缓存item
+    /// - Parameter key: -
+    /// - Returns: -
+    public func getItem(for key: String?) -> CCKVStorageItem?{
+        return nil
+    }
+    /// 获取缓存value
+    /// - Parameter key: -
+    /// - Returns: -
+    public func getItemValue(for key: String?) -> Data?{
+        return nil
+    }
+    public func getItems(for keys: Array<String>?) -> Array<CCKVStorageItem>?{
+        return nil
+    }
+    public func getItemValues(for keys: Array<String>?) -> Array<Data>?{
+        return nil
+    }
+    
+}
+
+
+/**FILE API*/
+extension CCKVStorage{
+    private func fileWrite(with name: String?, data: Data?) -> Bool{
+        guard let name = name, let data = data else { return false }
+        if let path = URL(string: dataPath.appending("/\(name)")){
+            do {
+                try data.write(to: path)
+            } catch let error as NSError {
+                print(error)
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    
+    private func fileRead(with filename: String?) -> Data? {
+        guard let filename = filename, filename.count > 0 else { return nil }
+        if let path = URL(string: dataPath.appending("/\(filename)")){
+            do{
+                return try Data.init(contentsOf: path)
+            }catch let error as NSError{
+                print(error)
+                return nil
+            }
+        }
+        return nil
+    }
+    
+    private func fileDelete(with filename: String?) -> Bool{
+        guard let filename = filename, filename.count > 0 else { return false }
+        if let path = URL(string: dataPath.appending("/\(filename)")){
+            do{
+                try FileManager.default.removeItem(at: path)
+            }catch let error as NSError{
+                print(error)
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    
     @discardableResult
     private func fileMoveAllToTrash() -> Bool{
         let uuidStr = UUID.init().uuidString
@@ -198,66 +411,21 @@ extension CCKVStorage{
         }
         return true
     }
+    
     private func fileEmptyTrashInBackground(){
-        
-    }
-    /**重置数据库*/
-    private func reset() {
-        do {
-            try FileManager.default.removeItem(atPath: path.appending("/\(dbFileName)"))
-            try FileManager.default.removeItem(atPath: path.appending("/\(dbShmFileName)"))
-            try FileManager.default.removeItem(atPath: path.appending("/\(dbWalFileName)"))
-        } catch {}
-        fileMoveAllToTrash()
-        fileEmptyTrashInBackground()
-    }
-    
-    
-}
-
-
-extension CCKVStorage{
-    /**
-     通过item的参数保存 key value filename extendedData
-     */
-    public func saveItem(_ item: CCKVStorageItem) -> Bool{
-        return saveItem(with: item.key, value: item.value, filename: item.filename, extendedData: item.extendedData)
+        DispatchQueue.global().async {
+            do{
+                let directoryContents = try FileManager.default.contentsOfDirectory(atPath: self.trashPath)
+                for path in directoryContents{
+                    if let fullPath = URL(string: self.trashPath.appending("/\(path)")){
+                        try FileManager.default.removeItem(at: fullPath)
+                    }
+                }
+            }catch{
+                print(error)
+            }
+            
+        }
     }
     
-    public func saveItem(with key: String?, value: Data?) -> Bool{
-        
-        return saveItem(with: key, value: value, filename: nil, extendedData: nil)
-    }
-    
-    public func saveItem(with key: String?, value: Data?, filename: String?, extendedData: Data?) -> Bool{
-        return true
-    }
-    
-    public func removeItem(for key: String?) -> Bool{
-        return true
-    }
-    
-    public func removeItem(for keys: Array<String>) -> Bool{
-        return true
-    }
-    
-    public func removeItemsLargerThanSize(_ size: Int) -> Bool{
-        return true
-    }
-    
-    public func removeItemsEarlierThanTime(_ time: Int) -> Bool{
-        return true
-    }
-    
-    public func removeItemsToFitSize(_ maxSize: Int) -> Bool{
-        return true
-    }
-    
-    public func removeItemsToFitCount(_ maxCount: Int) -> Bool{
-        return true
-    }
-    
-    public func removeAllItems() -> Bool{
-        return true
-    }
 }
