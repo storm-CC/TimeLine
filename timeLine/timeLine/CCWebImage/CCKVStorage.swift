@@ -76,6 +76,10 @@ class CCKVStorage{
     
     private init(){}
     
+    deinit {
+        dbClose()
+    }
+    
     convenience init(path: String) {
         self.init()
         self.path = path
@@ -193,10 +197,9 @@ extension CCKVStorage{
         fileEmptyTrashInBackground()
     }
     
-    
 }
 
-/**存储API*/
+/**暴露外部的存储API*/
 extension CCKVStorage{
     /**
      通过item的参数保存 key value filename extendedData
@@ -220,11 +223,18 @@ extension CCKVStorage{
     public func saveItem(with key: String?, value: Data?, filename: String?, extendedData: Data?) -> Bool{
         guard let key = key, key.count > 0 else { return false }
         if let filename = filename{
-            
+            if !fileWrite(with: filename, data: value) {
+                return false
+            }
+            if !dbSave(with: key, value: value, fileName: filename, extendedData: extendedData){
+                fileDelete(with: filename)
+                return false
+            }
+            return true
         }else{
-            
+            return dbSave(with: key, value: value, fileName: nil, extendedData: extendedData)
         }
-        return true
+        
     }
     
 }
@@ -278,7 +288,99 @@ extension CCKVStorage{
         }
         return stmt
     }
+    /**内部缓存清除*/
+    private func dbDeleteItem(with key: String?) -> Bool{
+        let sql = "delete from manifest where key = ?1;"
+        guard let stmt = dbPrepareStmt(sql) else { return false }
+        sqlite3_bind_text(stmt, 1, key, -1, nil)
+        
+        let result = sqlite3_step(stmt)
+        if result != SQLITE_DONE{
+            print(sqlite3_errmsg(db) ?? "db delete error")
+            return false
+        }
+        return true
+    }
+    private func dbDeleteItem(for keys: Array<String>?) -> Bool{
+        guard let keys = keys, keys.count > 0, dbCheck() else { return false }
+        let sql = "delete from manifest where key in \(dbJoined(keys: keys))"
+        var stmt: OpaquePointer? = nil
+        var result = sqlite3_prepare_v2(db, sql, -1, &stmt, nil)
+        if result != SQLITE_OK {
+            print(sqlite3_errmsg(db) ?? "sqlite stmt prepare error")
+            return false
+        }
+        dbBindJoined(keys: keys, stmt: stmt, index: 1)
+        result = sqlite3_step(stmt)
+        sqlite3_finalize(stmt)
+        if result == SQLITE_ERROR{
+            print(sqlite3_errmsg(db) ?? "sqlite delete error")
+            return false
+        }
+        return true
+    }
     
+    private func dbDeleteItemSizeLargerThan(_ size: Int) -> Bool{
+        let sql = "delete from manifest where size > ?1;"
+        guard let stmt = dbPrepareStmt(sql) else { return false }
+        sqlite3_bind_int(stmt, 1, Int32(size))
+        let result = sqlite3_step(stmt)
+        if result != SQLITE_DONE{
+            print(sqlite3_errmsg(db) ?? "sqlite delete error")
+            return false
+        }
+        return true
+    }
+    /**更新访问key的时间*/
+    private func dbUpdateAccessTime(with key: String) -> Bool{
+        let sql = "update manifest set last_access_time = ?1 where key = ?2;"
+        guard let stmt = dbPrepareStmt(sql) else { return false }
+        sqlite3_bind_int(stmt, 1, Int32(time(nil)))
+        sqlite3_bind_text(stmt, 2, key, -1, nil)
+        let result = sqlite3_step(stmt)
+        if result != SQLITE_DONE{
+            print(sqlite3_errmsg(db) ?? "sqlite update error")
+            return false
+        }
+        return true
+    }
+    
+    private func dbUpdateAccessTime(with keys: Array<String>) -> Bool{
+        if !dbCheck() { return false }
+        let t = Int32(time(nil))
+        let sql = "update manifest set last_access_time = \(t) where key in \(dbJoined(keys: keys))"
+        var stmt: OpaquePointer? = nil
+        var result = sqlite3_prepare_v2(db, sql, -1, &stmt, nil)
+        if result != SQLITE_OK{
+            print(sqlite3_errmsg(db) ?? "sqlite stmt prepare error")
+            return false
+        }
+        dbBindJoined(keys: keys, stmt: stmt, index: 1)
+        result = sqlite3_step(stmt)
+        sqlite3_finalize(stmt)
+        if result != SQLITE_DONE{
+            print(sqlite3_errmsg(db) ?? "sqlite update error")
+            return false
+        }
+        return true
+    }
+    
+    private func dbJoined(keys: Array<String>) -> String{
+        var string = ""
+        for i in 0..<keys.count {
+            string = string.appending("?")
+            if i+1 != keys.count {
+                string = string.appending(",")
+            }
+        }
+        return string
+    }
+    
+    private func dbBindJoined(keys: Array<String>, stmt: OpaquePointer?, index: Int){
+        for (i, key) in keys.enumerated() {
+            sqlite3_bind_text(stmt, Int32(index+i), key, -1, nil)
+        }
+    }
 }
 
 /**清理缓存API*/
@@ -287,7 +389,8 @@ extension CCKVStorage{
     /// - Parameter key: -
     /// - Returns: -
     public func removeItem(for key: String?) -> Bool{
-        return true
+        guard let key = key else { return false }
+        return dbDeleteItem(with: key)
     }
     public func removeItem(for keys: Array<String>) -> Bool{
         return true
@@ -348,7 +451,6 @@ extension CCKVStorage{
     public func getItemValues(for keys: Array<String>?) -> Array<Data>?{
         return nil
     }
-    
 }
 
 
@@ -380,7 +482,7 @@ extension CCKVStorage{
         }
         return nil
     }
-    
+    @discardableResult
     private func fileDelete(with filename: String?) -> Bool{
         guard let filename = filename, filename.count > 0 else { return false }
         if let path = URL(string: dataPath.appending("/\(filename)")){
