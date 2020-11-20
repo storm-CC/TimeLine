@@ -365,6 +365,38 @@ extension CCKVStorage{
         return true
     }
     
+    private func dbDeleteItem(with key: String) -> Bool{
+        let sql = "delete from manifest where key = ?1;"
+        guard let stmt = dbPrepareStmt(sql) else { return false }
+        sqlite3_bind_text(stmt, 1, key, -1, nil)
+        let result = sqlite3_step(stmt)
+        if result != SQLITE_DONE{
+            print(sqlite3_errmsg(db) ?? "db delete error")
+            return false
+        }
+        return true
+    }
+    
+    private func dbDeleteItem(with keys: Array<String>) -> Bool{
+        if !dbCheck() { return false }
+        let sql = "delete from manifest where key in \(dbJoined(keys: keys))"
+        var stmt: OpaquePointer?
+        var result = sqlite3_prepare_v2(db, sql, -1, &stmt, nil)
+        if result != SQLITE_OK{
+            print(sqlite3_errmsg(db) ?? "sqlite stmt prepare error")
+            return false
+        }
+        dbBindJoined(keys: keys, stmt: stmt, index: 1)
+        result = sqlite3_step(stmt)
+        sqlite3_finalize(stmt)
+        if result == SQLITE_ERROR{
+            print(sqlite3_errmsg(db) ?? "sqlite delete error")
+            return false
+        }
+        
+        return true
+    }
+    
     private func dbJoined(keys: Array<String>) -> String{
         var string = ""
         for i in 0..<keys.count {
