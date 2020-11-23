@@ -109,7 +109,7 @@ class CCKVStorage{
 }
 
 
-
+/**db的相关操作*/
 extension CCKVStorage{
     /**数据库连接*/
     private func dbOpen() -> Bool{
@@ -197,50 +197,18 @@ extension CCKVStorage{
         fileEmptyTrashInBackground()
     }
     
-}
-
-/**暴露外部的存储API*/
-extension CCKVStorage{
-    /**
-     通过item的参数保存 key value filename extendedData
-     */
-    public func saveItem(_ item: CCKVStorageItem) -> Bool{
-        return saveItem(with: item.key, value: item.value, filename: item.filename, extendedData: item.extendedData)
-    }
-    
-    public func saveItem(with key: String?, value: Data?) -> Bool{
-        return saveItem(with: key, value: value, filename: nil, extendedData: nil)
-    }
-    
-    
-    /// 添加缓存
-    /// - Parameters:
-    ///   - key: 缓存键
-    ///   - value: 缓存对象
-    ///   - filename: 缓存文件名称  filename != nil，则用文件缓存value，并把key，filename，extendedData写入数据库；否则，用数据库缓存
-    ///   - extendedData: 缓存扩展数据
-    /// - Returns: 缓存成功与否
-    public func saveItem(with key: String?, value: Data?, filename: String?, extendedData: Data?) -> Bool{
-        guard let key = key, key.count > 0 else { return false }
-        if let filename = filename{
-            if !fileWrite(with: filename, data: value) {
-                return false
-            }
-            if !dbSave(with: key, value: value, fileName: filename, extendedData: extendedData){
-                fileDelete(with: filename)
-                return false
-            }
-            return true
-        }else{
-            return dbSave(with: key, value: value, fileName: nil, extendedData: extendedData)
+    private func dbCheckPoint(){
+        if !dbCheck() {
+            return
         }
-        
+        sqlite3_wal_checkpoint(db, nil)
     }
-    
 }
 
+
+
+/**数据库私有方法*/
 extension CCKVStorage{
-    /**写入数据库*/
     private func dbSave(with key: String?, value: Data?, fileName: String?, extendedData: Data?) -> Bool{
         guard let key = key, let value = value else { return false }
         let sql = "insert or replace into manifest (key, finename, size, inline_data, modification_time, last_access_time, extended_data) values (?1, ?2, ?3, ?4, ?5, ?6, ?7);"
@@ -331,6 +299,19 @@ extension CCKVStorage{
         }
         return true
     }
+    
+    private func dbDeleteItemsTimeEarlyThan(_ time: Int) -> Bool{
+        let sql = "delete from manifest where last_access_time < ?1;"
+        guard let stmt = dbPrepareStmt(sql) else { return false }
+        sqlite3_bind_int(stmt, 1, Int32(time))
+        let result = sqlite3_step(stmt)
+        if result != SQLITE_DONE{
+            print(sqlite3_errmsg(db) ?? "sqlite delete error")
+            return false
+        }
+        return true
+    }
+    
     /**更新访问key的时间*/
     private func dbUpdateAccessTime(with key: String) -> Bool{
         let sql = "update manifest set last_access_time = ?1 where key = ?2;"
@@ -415,7 +396,46 @@ extension CCKVStorage{
     }
 }
 
-/**清理缓存API*/
+/**暴露外部的存储API*/
+extension CCKVStorage{
+    /**
+     通过item的参数保存 key value filename extendedData
+     */
+    public func saveItem(_ item: CCKVStorageItem) -> Bool{
+        return saveItem(with: item.key, value: item.value, filename: item.filename, extendedData: item.extendedData)
+    }
+    
+    public func saveItem(with key: String?, value: Data?) -> Bool{
+        return saveItem(with: key, value: value, filename: nil, extendedData: nil)
+    }
+    
+    /// 添加缓存
+    /// - Parameters:
+    ///   - key: 缓存键
+    ///   - value: 缓存对象
+    ///   - filename: 缓存文件名称  filename != nil，则用文件缓存value，并把key，filename，extendedData写入数据库；否则，用数据库缓存
+    ///   - extendedData: 缓存扩展数据
+    /// - Returns: 缓存成功与否
+    public func saveItem(with key: String?, value: Data?, filename: String?, extendedData: Data?) -> Bool{
+        guard let key = key, key.count > 0 else { return false }
+        if let filename = filename{
+            if !fileWrite(with: filename, data: value) {
+                return false
+            }
+            if !dbSave(with: key, value: value, fileName: filename, extendedData: extendedData){
+                fileDelete(with: filename)
+                return false
+            }
+            return true
+        }else{
+            return dbSave(with: key, value: value, fileName: nil, extendedData: extendedData)
+        }
+        
+    }
+    
+}
+
+/**暴露外部的清理缓存API*/
 extension CCKVStorage{
     /// 删除缓存
     /// - Parameter key: -
@@ -425,27 +445,42 @@ extension CCKVStorage{
         return dbDeleteItem(with: key)
     }
     public func removeItem(for keys: Array<String>) -> Bool{
-        return true
+        guard keys.count > 0 else { return false }
+        return dbDeleteItem(with: keys)
     }
     
     /// 删除所有容量大于size的缓存
     /// - Parameter size: -
     /// - Returns: -
     public func removeItemsLargerThanSize(_ size: Int) -> Bool{
-        return true
+        if size == Int.max { return true }
+        if size <= 0 { return removeAllItems() }
+        if dbDeleteItemSizeLargerThan(size) {
+            dbCheckPoint()
+            return true
+        }
+        return false
     }
     
     /// 删除所有时间比time小的缓存
     /// - Parameter time: -
     /// - Returns: -
     public func removeItemsEarlierThanTime(_ time: Int) -> Bool{
-        return true
+        if time <= 0  { return true }
+        if time == Int.max { return removeAllItems() }
+        if dbDeleteItemsTimeEarlyThan(time) {
+            dbCheckPoint()
+            return true
+        }
+        return false
     }
     
     /// 将缓存容量删除到maxSize大小，使用LRU
     /// - Parameter maxSize: -
     /// - Returns: -
     public func removeItemsToFitSize(_ maxSize: Int) -> Bool{
+        if maxSize == Int.max { return true }
+        if maxSize <= 0 { return removeAllItems() }
         return true
     }
     
@@ -459,6 +494,10 @@ extension CCKVStorage{
     /// 删除所有缓存
     /// - Returns: -
     public func removeAllItems() -> Bool{
+        if !dbClose() { return false }
+        reset()
+        if !dbOpen() { return false }
+        if !dbInitialize() { return false }
         return true
     }
 }
@@ -469,6 +508,8 @@ extension CCKVStorage{
     /// - Parameter key: -
     /// - Returns: -
     public func getItem(for key: String?) -> CCKVStorageItem?{
+        guard let key = key, key.count > 0 else { return nil }
+        
         return nil
     }
     /// 获取缓存value
